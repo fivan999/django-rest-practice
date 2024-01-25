@@ -1,6 +1,7 @@
-import pathlib
-import dotenv
 import os
+import pathlib
+
+import dotenv
 
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
@@ -73,19 +74,19 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation'
-                '.UserAttributeSimilarityValidator',
+        '.UserAttributeSimilarityValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation'
-                '.MinimumLengthValidator',
+        '.MinimumLengthValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation'
-                '.CommonPasswordValidator',
+        '.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation'
-                '.NumericPasswordValidator',
+        '.NumericPasswordValidator',
     },
 ]
 
