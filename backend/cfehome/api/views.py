@@ -1,6 +1,7 @@
-import django.http
-import django.forms
 import products.models
+
+import django.forms
+import django.http
 
 
 def home(request: django.http.HttpRequest) -> django.http.JsonResponse:

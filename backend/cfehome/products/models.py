@@ -7,7 +7,7 @@ class Product(django.db.models.Model):
     title = django.db.models.CharField(
         max_length=100,
         verbose_name='название',
-        help_text='Введите название товара'
+        help_text='Введите название товара',
     )
 
     description = django.db.models.TextField(
@@ -15,14 +15,14 @@ class Product(django.db.models.Model):
         verbose_name='описание',
         help_text='Введите описание товара',
         blank=True,
-        null=True
+        null=True,
     )
 
     price = django.db.models.DecimalField(
         verbose_name='цена',
         help_text='Введите цену товара',
         decimal_places=2,
-        max_digits=15
+        max_digits=15,
     )
 
     class Meta:

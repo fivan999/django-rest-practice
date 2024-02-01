@@ -1,7 +1,6 @@
-import django.urls
 import api.views
 
+import django.urls
 
-urlpatterns = [
-    django.urls.path('home/', api.views.home)
-]
+
+urlpatterns = [django.urls.path('home/', api.views.home)]
