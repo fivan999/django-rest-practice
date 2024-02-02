@@ -3,4 +3,8 @@ import api.views
 import django.urls
 
 
-urlpatterns = [django.urls.path('home/', api.views.home)]
+app_name = 'api'
+
+urlpatterns = [
+    django.urls.path('home/', api.views.home, name='home'),
+]
