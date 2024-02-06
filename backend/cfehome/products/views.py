@@ -1,7 +1,8 @@
-import products.models
-import products.serializers
 import rest_framework.generics
 import rest_framework.serializers
+
+import products.models
+import products.serializers
 
 
 class ProductListCreateAPIView(rest_framework.generics.ListCreateAPIView):

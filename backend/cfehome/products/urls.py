@@ -1,6 +1,6 @@
-import products.views
-
 import django.urls
+
+import products.views
 
 
 app_name = 'products'

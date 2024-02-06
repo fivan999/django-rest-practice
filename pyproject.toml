@@ -11,7 +11,7 @@ extend-exclude='''
 [tool.isort] 
 default_section = "THIRDPARTY" 
 known_django = "django"
-known_local_folder = []
+known_local_folder = ["cfehome", "api", "products"]
 sections = ["FUTURE","STDLIB","THIRDPARTY","DJANGO","FIRSTPARTY","LOCALFOLDER"] 
 skip = [".gitignore", "venv", "env"] 
 skip_glob = ["*/migrations/*"] 

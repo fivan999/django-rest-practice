@@ -1,6 +1,6 @@
-import products.models
-
 import django.contrib
+
+import products.models
 
 
 @django.contrib.admin.register(products.models.Product)

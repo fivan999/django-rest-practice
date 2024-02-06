@@ -1,10 +1,11 @@
-import products.models
-import products.serializers
 import rest_framework.decorators
 import rest_framework.response
 
 import django.forms
 import django.http
+
+import products.models
+import products.serializers
 
 
 @rest_framework.decorators.api_view(http_method_names=['GET'])

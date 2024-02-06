@@ -1,6 +1,6 @@
-import api.views
-
 import django.urls
+
+import api.views
 
 
 app_name = 'api'
