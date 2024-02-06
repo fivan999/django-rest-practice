@@ -12,6 +12,7 @@ async def test_post():
             assert response.status == 201
             resp_data = await response.json()
             assert isinstance(resp_data, dict)
+            assert resp_data['title'] == resp_data['description']
 
 
 async def test_get_list():
