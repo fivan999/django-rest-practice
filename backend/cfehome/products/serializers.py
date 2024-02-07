@@ -13,3 +13,4 @@ class ProductSerializer(rest_framework.serializers.ModelSerializer):
             'description',
             'price',
         ]
+        read_only_fields = ['user']

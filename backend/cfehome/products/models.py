@@ -1,3 +1,5 @@
+import users.models
+
 import django.db.models
 
 
@@ -23,6 +25,16 @@ class Product(django.db.models.Model):
         help_text='Введите цену товара',
         decimal_places=2,
         max_digits=15,
+    )
+
+    user = django.db.models.ForeignKey(
+        users.models.User,
+        verbose_name='пользователь',
+        help_text='Пользователь, создавший товар',
+        blank=True,
+        null=True,
+        related_name='products',
+        on_delete=django.db.models.DO_NOTHING,
     )
 
     class Meta:

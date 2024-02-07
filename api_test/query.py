@@ -15,6 +15,18 @@ async def test_post():
             assert resp_data['title'] == resp_data['description']
 
 
+async def test_put():
+    async with aiohttp.ClientSession() as session:
+        async with session.put(
+            'http://127.0.0.1:8000/api/products/1/',
+            data={'price': 500, 'title': 'bo'},
+        ) as response:
+            assert response.status == 200
+            resp_data = await response.json()
+            assert isinstance(resp_data, dict)
+            assert resp_data['title'] == resp_data['description']
+
+
 async def test_get_list():
     async with aiohttp.ClientSession() as session:
         async with session.get(
@@ -31,6 +43,7 @@ async def main():
     tasks = [
         asyncio.create_task(test_get_list()),
         asyncio.create_task(test_post()),
+        asyncio.create_task(test_put()),
     ]
     await asyncio.gather(*tasks)
 
