@@ -5,8 +5,8 @@ import django.urls
 
 urlpatterns = [
     django.urls.path('admin/', django.contrib.admin.site.urls),
-    django.urls.path('api/', django.urls.include('api.urls')),
     django.urls.path('api/products/', django.urls.include('products.urls')),
+    django.urls.path('api/auth/', django.urls.include('users.urls')),
 ]
 
 if django.conf.settings.DEBUG:

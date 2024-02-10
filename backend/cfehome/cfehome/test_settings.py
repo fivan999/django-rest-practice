@@ -1,26 +1,13 @@
-import os
 import pathlib
-
-import dotenv
 
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent.parent
 
-dotenv.load_dotenv()
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', default='default')
+SECRET_KEY = 'secret_key'
 
-YES_OPTIONS = ('true', 'y', '1', 'yes')
+DEBUG = True
 
-DEBUG = os.getenv('DJANGO_DEBUG', default='True').lower() in YES_OPTIONS
-
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
-else:
-    ALLOWED_HOSTS = os.getenv(
-        'DJANGO_ALLOWED_HOSTS', default='127.0.0.1'
-    ).split()
-
-INTERNAL_IPS = os.getenv('DJANGO_INTERNAL_IPS', default='127.0.0.1').split()
+INTERNAL_IPS = ['127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -44,10 +31,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-if DEBUG:
-    INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
 ROOT_URLCONF = 'cfehome.urls'
 

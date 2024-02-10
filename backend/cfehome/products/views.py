@@ -13,10 +13,6 @@ class ProductListCreateAPIView(rest_framework.generics.ListCreateAPIView):
 
     queryset = products.models.Product.objects.all()
     serializer_class = products.serializers.ProductSerializer
-    permission_classes = [rest_framework.permissions.IsAuthenticatedOrReadOnly]
-    authentication_classes = [
-        rest_framework.authentication.SessionAuthentication
-    ]
 
     def perform_create(
         self, serializer: rest_framework.serializers.Serializer
@@ -39,9 +35,6 @@ class ProductDetailAPIView(
     serializer_class = products.serializers.ProductSerializer
     permission_classes = [
         products.permissions.RetrieveUpdateDestroyProductPermission
-    ]
-    authentication_classes = [
-        rest_framework.authentication.SessionAuthentication
     ]
 
     def perform_update(
