@@ -1,19 +1,12 @@
-import django.urls
+import rest_framework.routers
 
 import products.views
+import products.viewsets
 
 
 app_name = 'products'
 
-urlpatterns = [
-    django.urls.path(
-        '<int:pk>/',
-        view=products.views.ProductDetailAPIView.as_view(),
-        name='detail',
-    ),
-    django.urls.path(
-        '',
-        view=products.views.ProductListCreateAPIView.as_view(),
-        name='list_create',
-    ),
-]
+router = rest_framework.routers.SimpleRouter()
+router.register('products', products.viewsets.ProductViewSet)
+
+urlpatterns = router.urls

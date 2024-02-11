@@ -8,5 +8,5 @@ import django.urls
 def test_product_list() -> None:
     """тестируем список товаров"""
     client = django.test.Client()
-    response = client.get(django.urls.reverse_lazy('products:list_create'))
+    response = client.get(django.urls.reverse_lazy('products:product-list'))
     assert response.status_code == 200
