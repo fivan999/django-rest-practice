@@ -1,4 +1,5 @@
 import rest_framework.permissions
+import rest_framework.serializers
 import rest_framework.viewsets
 
 import products.models
@@ -10,7 +11,12 @@ class ProductViewSet(rest_framework.viewsets.ModelViewSet):
     """вьюсет для модели Product"""
 
     queryset = products.models.Product.objects.all()
-    serializer_class = products.serializers.ProductSerializer
+
+    def get_serializer_class(self) -> rest_framework.serializers.Serializer:
+        """получаем serializer для запроса"""
+        if self.action == 'list':
+            return products.serializers.ProductListSerializer
+        return products.serializers.ProductDetailSerializer
 
     def get_permissions(self) -> list:
         """

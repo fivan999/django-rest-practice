@@ -12,7 +12,7 @@ class ProductListCreateAPIView(rest_framework.generics.ListCreateAPIView):
     """создание товара и список товаров"""
 
     queryset = products.models.Product.objects.all()
-    serializer_class = products.serializers.ProductSerializer
+    serializer_class = products.serializers.ProductListSerializer
 
     def perform_create(
         self, serializer: rest_framework.serializers.Serializer
@@ -32,7 +32,7 @@ class ProductDetailAPIView(
     """просмотр, обновление и удаление одного товара"""
 
     queryset = products.models.Product.objects.all()
-    serializer_class = products.serializers.ProductSerializer
+    serializer_class = products.serializers.ProductDetailSerializer
     permission_classes = [
         products.permissions.RetrieveUpdateDestroyProductPermission
     ]
