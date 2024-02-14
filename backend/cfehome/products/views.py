@@ -14,17 +14,6 @@ class ProductListCreateAPIView(rest_framework.generics.ListCreateAPIView):
     queryset = products.models.Product.objects.all()
     serializer_class = products.serializers.ProductListSerializer
 
-    def perform_create(
-        self, serializer: rest_framework.serializers.Serializer
-    ) -> None:
-        """установить значение description в title, если description пустой"""
-        description = serializer.validated_data.get('description')
-        if not description:
-            serializer.validated_data[
-                'description'
-            ] = serializer.validated_data.get('title')
-        serializer.save(user=self.request.user)
-
 
 class ProductDetailAPIView(
     rest_framework.generics.RetrieveUpdateDestroyAPIView
@@ -36,13 +25,3 @@ class ProductDetailAPIView(
     permission_classes = [
         products.permissions.RetrieveUpdateDestroyProductPermission
     ]
-
-    def perform_update(
-        self, serializer: rest_framework.serializers.Serializer
-    ) -> None:
-        """установить значение description в title, если description пустой"""
-        if not serializer.validated_data.get('description'):
-            serializer.validated_data[
-                'description'
-            ] = serializer.validated_data.get('title')
-        serializer.save()

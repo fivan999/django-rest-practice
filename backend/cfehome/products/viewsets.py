@@ -31,28 +31,3 @@ class ProductViewSet(rest_framework.viewsets.ModelViewSet):
                 products.permissions.RetrieveUpdateDestroyProductPermission
             ]
         return [permission() for permission in permission_classes]
-
-    def perform_create(
-        self, serializer: rest_framework.serializers.Serializer
-    ) -> None:
-        """
-        установить значение description в title,
-        если description пустой
-        и привязать пользователя
-        """
-        description = serializer.validated_data.get('description')
-        if not description:
-            serializer.validated_data[
-                'description'
-            ] = serializer.validated_data.get('title')
-        serializer.save(user=self.request.user)
-
-    def perform_update(
-        self, serializer: rest_framework.serializers.Serializer
-    ) -> None:
-        """установить значение description в title, если description пустой"""
-        if not serializer.validated_data.get('description'):
-            serializer.validated_data[
-                'description'
-            ] = serializer.validated_data.get('title')
-        serializer.save()

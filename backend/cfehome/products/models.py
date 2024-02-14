@@ -34,7 +34,7 @@ class Product(django.db.models.Model):
         blank=True,
         null=True,
         related_name='products',
-        on_delete=django.db.models.DO_NOTHING,
+        on_delete=django.db.models.SET_NULL,
     )
 
     class Meta:
