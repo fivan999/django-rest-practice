@@ -2,9 +2,13 @@ import users.models
 
 import django.db.models
 
+import products.managers
+
 
 class Product(django.db.models.Model):
     """модель товара"""
+
+    objects = products.managers.ProductManager()
 
     title = django.db.models.CharField(
         max_length=100,
@@ -25,6 +29,12 @@ class Product(django.db.models.Model):
         help_text='Введите цену товара',
         decimal_places=2,
         max_digits=15,
+    )
+
+    is_public = django.db.models.BooleanField(
+        verbose_name='публичный',
+        help_text='Публичный товар или нет',
+        default=True,
     )
 
     user = django.db.models.ForeignKey(

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_elasticsearch_dsl',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
 ]
@@ -123,4 +124,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.'
     'LimitOffsetPagination',
     'PAGE_SIZE': 10,
+}
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://elasticsearch:9200',
+    }
 }

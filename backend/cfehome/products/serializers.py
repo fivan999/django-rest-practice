@@ -14,12 +14,7 @@ class ProductListSerializer(rest_framework.serializers.ModelSerializer):
 
     class Meta:
         model = products.models.Product
-        fields = [
-            'pk',
-            'url',
-            'title',
-            'price',
-        ]
+        fields = ['pk', 'url', 'title', 'price', 'description']
 
 
 class ProductDetailSerializer(rest_framework.serializers.ModelSerializer):
