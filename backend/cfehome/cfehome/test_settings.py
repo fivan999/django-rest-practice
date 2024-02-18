@@ -107,17 +107,3 @@ REST_FRAMEWORK = {
     'LimitOffsetPagination',
     'PAGE_SIZE': 10,
 }
-
-ELK_BASE_URL = 'elasticsearch://{username}:{password}@{host_ip}:{host_port}'
-ELASTIC_SEARCH_URL = ELK_BASE_URL.format(
-    username='ELASTICSEARCH_USER',
-    password='ELASTICSEARCH_PASS',
-    host_ip='elasticsearch',
-    host_port='9200',
-)
-
-ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': ELASTIC_SEARCH_URL,
-    }
-}
