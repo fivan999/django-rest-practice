@@ -1,8 +1,8 @@
 import rest_framework.reverse
 import rest_framework.serializers
-import users.serializers
 
 import products.models
+import users.serializers
 
 
 class ProductListSerializer(rest_framework.serializers.ModelSerializer):
@@ -11,10 +11,11 @@ class ProductListSerializer(rest_framework.serializers.ModelSerializer):
     url = rest_framework.serializers.HyperlinkedIdentityField(
         view_name='products:product-detail'
     )
+    user = users.serializers.UserPublicSerializer(read_only=True)
 
     class Meta:
         model = products.models.Product
-        fields = ['pk', 'url', 'title', 'price', 'description']
+        fields = ['pk', 'url', 'title', 'price', 'description', 'user']
 
 
 class ProductDetailSerializer(rest_framework.serializers.ModelSerializer):

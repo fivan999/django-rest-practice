@@ -1,6 +1,6 @@
-import users.managers
-
 import django.contrib.auth.models
+
+import users.managers
 
 
 class User(django.contrib.auth.models.AbstractUser):

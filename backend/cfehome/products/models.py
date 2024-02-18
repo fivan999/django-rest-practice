@@ -1,8 +1,7 @@
-import users.models
-
 import django.db.models
 
 import products.managers
+import users.models
 
 
 class Product(django.db.models.Model):

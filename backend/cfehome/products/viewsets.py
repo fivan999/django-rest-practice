@@ -7,38 +7,29 @@ import django.http
 
 import products.models
 import products.permissions
-import products.search_service
 import products.serializers
+import search.mixins
+import search.services
 
 
-class ProductViewSet(rest_framework.viewsets.ModelViewSet):
+class ProductViewSet(
+    search.mixins.ListSearchMixin, rest_framework.viewsets.ModelViewSet
+):
     """вьюсет для модели Product"""
 
     queryset = products.models.Product.objects.all()
+    availabe_search_params = {'user': str, 'is_public': lambda val: val == '1'}
+    index_name = 'product_index'
 
-    def get_queryset(self) -> django.db.models.QuerySet:
-        """
-        получаем queryset в зависимости от
-        поискового запроса и пользователя
-        """
-        if self.action == 'list':
-            user_pk = None
-            if self.request.user.is_authenticated:
-                user_pk = self.request.user.pk
-            user_based_queryset = (
-                products.models.Product.objects.search_by_user(user_pk)
-            )
-
-            query = self.request.GET.get('query', '')
-            if not query:
-                return user_based_queryset
-
-            return user_based_queryset.filter(
-                pk__in=products.search_service.perform_search(
-                    query, 'product_index'
-                )
-            )
-        return self.__class__.queryset
+    def get_default_queryset(self) -> django.db.models.QuerySet:
+        """получаем базовый queryset для поиска по нему"""
+        user_pk = None
+        if self.request.user.is_authenticated:
+            user_pk = self.request.user.pk
+        user_based_queryset = (
+            products.models.Product.objects.search_by_user(user_pk)
+        ).select_related('user')
+        return user_based_queryset
 
     def get_serializer_class(self) -> rest_framework.serializers.Serializer:
         """получаем serializer для запроса"""
@@ -59,9 +50,3 @@ class ProductViewSet(rest_framework.viewsets.ModelViewSet):
                 products.permissions.RetrieveUpdateDestroyProductPermission
             ]
         return [permission() for permission in permission_classes]
-
-    # def list(
-    #     self, request: django.http.HttpRequest, *args, **kwargs
-    # ) -> django.http.HttpResponse:
-    #     """список элементов"""
-    #     return super().list(request, *args, **kwargs)

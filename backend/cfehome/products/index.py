@@ -8,5 +8,9 @@ import products.models
 class ProductModelIndex(algoliasearch_django.AlgoliaIndex):
     """индекс Algolia для модели Product"""
 
-    fields = ('title', 'description', 'user')
+    fields = ('title', 'description', 'user', 'is_public')
+    settings = {
+        'attributesForFaceting': ['user', 'is_public'],
+        'searchableAttributes': ['title', 'description'],
+    }
     index_name = 'product_index'

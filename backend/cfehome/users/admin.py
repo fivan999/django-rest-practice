@@ -1,7 +1,7 @@
-import users.models
-
 import django.contrib.admin
 import django.contrib.auth.admin
+
+import users.models
 
 
 class UserAdmin(django.contrib.auth.admin.UserAdmin):
