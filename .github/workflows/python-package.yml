@@ -30,6 +30,10 @@ jobs:
 
       - name: code check
         run: | 
-              flake8 . --count --show-source --statistics
-              black . --check
-              isort . --check
+          flake8 . --count --show-source --statistics
+          black . --check
+          isort . --check
+      
+      - name: Run tests
+        run: |
+          pytest
