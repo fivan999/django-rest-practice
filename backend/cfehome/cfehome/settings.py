@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'algoliasearch_django',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'corsheaders',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'search.apps.SearchConfig',
@@ -40,6 +42,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -116,8 +119,7 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -131,3 +133,11 @@ ALGOLIA = {
     'APPLICATION_ID': os.getenv('ALGOLIA_APPLICATION_ID', 'app_id'),
     'API_KEY': os.getenv('ALGOLIA_API_KEY', 'api_key'),
 }
+
+CORS_ALLOWED_ORIGINS = []
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        'http://localhost:8111',
+        'https://localhost:8111',
+    ]
+CORS_URLS_REGEX = r"^/api/.*$"

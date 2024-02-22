@@ -1,3 +1,4 @@
+import os
 import pathlib
 
 
@@ -18,12 +19,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'corsheaders',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'search.apps.SearchConfig',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -98,8 +102,7 @@ AUTH_USER_MODEL = 'users.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -108,3 +111,16 @@ REST_FRAMEWORK = {
     'LimitOffsetPagination',
     'PAGE_SIZE': 10,
 }
+
+ALGOLIA = {
+    'APPLICATION_ID': os.getenv('ALGOLIA_APPLICATION_ID', 'app_id'),
+    'API_KEY': os.getenv('ALGOLIA_API_KEY', 'api_key'),
+}
+
+CORS_ALLOWED_ORIGINS = []
+if DEBUG:
+    CORS_ALLOWED_ORIGINS = [
+        'http://localhost:8111',
+        'https://localhost:8111',
+    ]
+CORS_URLS_REGEX = r"^/api/.*$"
