@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'search.apps.SearchConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +43,7 @@ ROOT_URLCONF = 'cfehome.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,3 +125,10 @@ if DEBUG:
         'https://localhost:8111',
     ]
 CORS_URLS_REGEX = r"^/api/.*$"
+
+CELERY_TASK_ALWAYS_EAGER = True
+
+USER_IS_ACTIVE = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'

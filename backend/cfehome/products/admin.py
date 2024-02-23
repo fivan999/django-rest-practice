@@ -7,6 +7,9 @@ import products.models
 class ProductAdmin(django.contrib.admin.ModelAdmin):
     """отображение модели Product в админке"""
 
-    list_display = ('id', 'title')
+    list_display = (
+        'id',
+        'title',
+    )
     list_display_links = ('id',)
     list_editable = ('title',)

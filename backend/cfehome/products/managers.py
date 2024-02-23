@@ -13,4 +13,4 @@ class ProductManager(django.db.models.Manager):
         return self.filter(
             django.db.models.Q(is_public=True)
             | django.db.models.Q(user__pk=user_pk)
-        )
+        ).distinct()

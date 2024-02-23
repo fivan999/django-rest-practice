@@ -31,12 +31,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'algoliasearch_django',
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
+    'djoser',
     'products.apps.ProductsConfig',
     'users.apps.UsersConfig',
     'search.apps.SearchConfig',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'cfehome.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,6 +118,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
+USER_IS_ACTIVE = (
+    os.getenv('USER_IS_ACTIVE', default='true').lower().strip() in YES_OPTIONS
+)
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -141,3 +146,37 @@ if DEBUG:
         'https://localhost:8111',
     ]
 CORS_URLS_REGEX = r"^/api/.*$"
+
+CELERY_TASK_ALWAYS_EAGER = (
+    os.getenv('CELERY_TASK_ALWAYS_EAGER', default='true').lower().strip()
+    in YES_OPTIONS
+)
+
+RABBITMQ_HOST = os.getenv('RABBITMQ_HOST', default='localhost')
+RABBITMQ_USER = os.getenv('RABBITMQ_USER', default='guest')
+RABBITMQ_PASS = os.getenv('RABBITMQ_PASS', default='password')
+CELERY_BROKER_URL = (
+    f'amqp://{RABBITMQ_USER}:{RABBITMQ_PASS}@{RABBITMQ_HOST}:5672//'
+)
+
+if os.getenv('USE_SMTP', default='False').lower() in YES_OPTIONS:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST')
+    EMAIL_PORT = os.getenv('EMAIL_PORT')
+    EMAIL_USE_TLS = (
+        os.getenv('EMAIL_USE_TLS', default='true').lower() in YES_OPTIONS
+    )
+    EMAIL_USE_SSL = (
+        os.getenv('EMAIL_USER_SSL', default='false').lower() in YES_OPTIONS
+    )
+    if EMAIL_USE_TLS:
+        EMAIL_USE_SSL = False
+    if EMAIL_USE_SSL:
+        EMAIL_USE_TLS = False
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    SERVER_EMAIL = EMAIL_HOST_USER
+    DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'

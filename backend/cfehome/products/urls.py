@@ -7,6 +7,8 @@ import products.viewsets
 app_name = 'products'
 
 router = rest_framework.routers.SimpleRouter()
-router.register('products', products.viewsets.ProductViewSet)
+router.register(
+    'products', products.viewsets.ProductViewSet, basename='product'
+)
 
 urlpatterns = router.urls

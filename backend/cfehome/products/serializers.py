@@ -22,6 +22,9 @@ class ProductDetailSerializer(rest_framework.serializers.ModelSerializer):
     """сериализация модели Product"""
 
     user = users.serializers.UserPublicSerializer(read_only=True)
+    is_public = rest_framework.serializers.BooleanField(
+        default=True, write_only=True
+    )
 
     class Meta:
         model = products.models.Product
@@ -31,6 +34,7 @@ class ProductDetailSerializer(rest_framework.serializers.ModelSerializer):
             'description',
             'price',
             'user',
+            'is_public',
         ]
 
     def create(self, validated_data: dict) -> products.models.Product:

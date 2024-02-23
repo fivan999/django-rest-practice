@@ -17,6 +17,7 @@ class RetrieveUpdateDestroyProductPermission(
         'PUT': 'change',
         'PATCH': 'change',
         'DELETE': 'delete',
+        'GET': 'view',
     }
 
     def has_object_permission(
@@ -25,7 +26,10 @@ class RetrieveUpdateDestroyProductPermission(
         view: rest_framework.views.APIView,
         obj: products.models.Product,
     ):
-        if request.method in rest_framework.permissions.SAFE_METHODS:
+        if (
+            request.method in rest_framework.permissions.SAFE_METHODS
+            and obj.is_public
+        ):
             return True
         user = request.user
         if obj.user and user.pk == obj.user.pk:
